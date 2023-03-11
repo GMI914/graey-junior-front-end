@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    cursor: default;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: fit-content;
+    margin: 50px auto;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.cell {
+    height: 300px;
+    width: 300px;
+    position: relative;
+    border: 3px solid #333;
+    cursor: pointer;
+}
+
+.X, .O {
+    cursor: default;
+}
+
+.X::before, .X::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 20%;
+    left: 40%;
+    top: 0;
+    background: #333;
+    transform: rotate(45deg);
+}
+
+.X::after {
+    transform: rotate(-45deg);
+}
+
+.O::before, .O::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 80%;
+    width: 80%;
+    left: 10%;
+    top: 10%;
+    background: #333;
+    border-radius: 50%;
+}
+
+.O::after {
+    height: 40%;
+    width: 40%;
+    left: 30%;
+    top: 30%;
+    background: #fff;
+}
+
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 20px 0 0;
+}
+
+button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 5px 10px;
+    border: 1px solid #333;
+}
