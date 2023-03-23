@@ -4,6 +4,6 @@ import MyComponent from "../components/myComponent.vue";
 
 <template>
   <main>
-    <MyComponent/>
+    <MyComponent />
   </main>
 </template>
