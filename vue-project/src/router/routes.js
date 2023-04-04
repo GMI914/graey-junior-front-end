@@ -1,5 +1,6 @@
 import Home from '../views/Home.vue'
 import Manifect from '../views/Manifect.vue'
+import Register from '../views/Register.vue'
 
 export default [
     {
@@ -11,5 +12,10 @@ export default [
         path: '/manifest',
         name: 'manifest',
         component: Manifect
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register
     }
 ]
