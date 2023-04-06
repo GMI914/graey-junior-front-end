@@ -1,12 +1,17 @@
 <template>
     <header>
         <div class="header-contect">
-            <RouterLink class="logo" :to="{name: 'home'}">
+            <RouterLink class="logo" :to="{ name: 'home' }">
                 <img src="../../static/logo.png" alt="Veli Store Logo" height="30" width="84">
             </RouterLink>
             <SearchInput class="search-input" type="text" placeholder="რას ეძებთ?" />
-            <HeaderButton>კალათა</HeaderButton>
-            <HeaderButton>შესვლა</HeaderButton>
+            <template v-if="!userData.full_name">
+                <HeaderButton>კალათა</HeaderButton>
+                <HeaderButton @click="login">შესვლა</HeaderButton>
+            </template>
+            <template v-if="userData.full_name">
+                <HeaderButton @click="logout">{{ userData.full_name }}</HeaderButton>
+            </template>
         </div>
     </header>
 </template>
@@ -22,6 +27,22 @@ export default {
         SearchInput,
         HeaderButton,
         RouterLink
+    },
+    props: {
+        userData: {
+            type: Object,
+            default() {
+                return {}
+            }
+        }
+    },
+    methods: {
+        login() {
+            this.$router.push({ name: 'login' })
+        },
+        logout() {
+            this.$router.push({ name: 'logout' })
+        }
     }
 }
 </script>
@@ -31,6 +52,7 @@ header {
     padding: 12px 20px;
     background-color: #B4D984;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .header-contect {

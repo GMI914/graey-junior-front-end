@@ -1,12 +1,19 @@
 <template>
     <BaseWrapper>
-        <input type="email" :value="registrationData.email" @input="inputEmail" name="testEmail"> <br>
-        <p style="color: red" v-if="errors['email'] && errors['email'].length" v-for="err in errors['email']" :key="err">{{
-            err }}</p>
-        <input type="password" :value="registrationData.password" @input="inputPassword" name="testPassword"> <br>
+        <label for="Email">Email:</label>
+        <input type="email" name="Email" id="Email" :value="userForm.username" @input="inputEmail"> <br>
+        <p style="color: red" v-if="errors['username'] && errors['username'].length" v-for="err in errors['username']"
+            :key="err">{{
+                err }}</p>
+        <label for="Password">Password:</label>
+        <input type="password" name="Password" id="Password" :value="userForm.password" @input="inputPassword"><br>
         <p style="color: red" v-if="errors['password'] && errors['password'].length" v-for="err in errors['password']"
-            :key="err">{{ err }}</p>
-        <button @click="register">register</button> <br>
+            :key="err">{{
+                err }}</p>
+        <button @click="login">Login</button>
+        <p style="color: red" v-if="errors['non_field_errors'] && errors['non_field_errors'].length"
+            v-for="err in errors['non_field_errors']" :key="err">{{
+                err }}</p>
     </BaseWrapper>
 </template>
 
@@ -16,7 +23,7 @@ import { ajax, apiUrls } from '../api/urls'
 import token from '../api/token'
 
 export default {
-    name: 'RegisterPage',
+    name: "LoginPage",
     components: {
         BaseWrapper
     },
@@ -30,30 +37,23 @@ export default {
     },
     data() {
         return {
-            registrationData: {
-                email: '',
-                password: '',
-                password2: '',
-
-                company_name: 'test user',
-                first_name: 'test',
-                last_name: 'user',
-                phone: '000000000',
+            userForm: {
+                username: '',
+                password: ''
             },
             errors: {}
         }
     },
     methods: {
         inputEmail(e) {
-            this.registrationData.email = e.target.value
+            this.userForm.username = e.target.value
         },
         inputPassword(e) {
-            this.registrationData.password = e.target.value
+            this.userForm.password = e.target.value
         },
-        register() {
-            this.registrationData.password2 = this.registrationData.password
+        login() {
             return ajax
-                .post(apiUrls.register, this.registrationData)
+                .post(apiUrls.login, this.userForm)
                 .then(response => {
                     token.setToken(response.data.token)
                     this.$emit('updateUserData', { route: { name: 'home' } })

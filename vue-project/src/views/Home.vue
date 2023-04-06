@@ -1,8 +1,7 @@
 <template>
   <BaseWrapper>
     <CategorySelector />
-    <ProductSlider title="დღის შეთავაზებები" :data="productList" link="#"/>
-
+    <ProductSlider title="დღის შეთავაზებები" :data="productList" link="#" />
   </BaseWrapper>
 </template>
 
@@ -17,6 +16,14 @@ export default {
     BaseWrapper,
     CategorySelector,
     ProductSlider
+  },
+  props: {
+    userData: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
   },
   data() {
     return {
