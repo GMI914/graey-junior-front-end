@@ -10,7 +10,7 @@
                 <HeaderButton @click="login">შესვლა</HeaderButton>
             </template>
             <template v-if="userData.full_name">
-                <HeaderButton @click="logout">{{ userData.full_name }}</HeaderButton>
+                <HeaderButton @click="profile">{{ userData.full_name }}</HeaderButton>
             </template>
         </div>
     </header>
@@ -40,8 +40,8 @@ export default {
         login() {
             this.$router.push({ name: 'login' })
         },
-        logout() {
-            this.$router.push({ name: 'logout' })
+        profile() {
+            this.$router.push({ name: 'profile' })
         }
     }
 }

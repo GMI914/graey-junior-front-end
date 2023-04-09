@@ -1,7 +1,7 @@
 <template>
   <BaseWrapper>
-    <CategorySelector />
-    <ProductSlider title="დღის შეთავაზებები" :data="productList" link="#" />
+    <CategorySelector :data="categoryData" @selectCategory="selectCategory" />
+    <ProductSlider title="დღის შეთავაზებები" :data="productData" link="#" />
   </BaseWrapper>
 </template>
 
@@ -9,6 +9,7 @@
 import CategorySelector from '../components/category/CategorySelector.vue'
 import BaseWrapper from '../components/layout/BaseWrapper.vue'
 import ProductSlider from '../components/product/ProductSlider.vue'
+import { ajax, authAjax, apiUrls } from '../api/urls'
 
 export default {
   name: "HomePage",
@@ -27,88 +28,36 @@ export default {
   },
   data() {
     return {
-      productList: [
-        {
-          id: 1,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 2,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 3,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 4,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 5,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 6,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 7,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 8,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 9,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-        {
-          id: 10,
-          name: 'Baseus Transparent Key Phone Case Apple IPhone 11 Transparent',
-          price: 29,
-          discount: 34,
-          installment: 4,
-          image: 'https://adjarastoremedia.s3.amazonaws.com/media/__sized__/product/6953156211452-thumbnail-200x200-95.jpg'
-        },
-      ]
+      categoryData: [],
+      productData: []
+    }
+  },
+  mounted() {
+    this.getCategoryData()
+    this.getProductData(this.$route.query)
+  },
+  methods: {
+    getCategoryData() {
+      return ajax
+        .get(apiUrls.productCategories)
+        .then(response => {
+          this.categoryData = response.data;
+        })
+    },
+    getProductData(query = {}) {
+      return authAjax()
+        .get(apiUrls.productList, { params: query })
+        .then(response => {
+          this.productData = response.data.results;
+        })
+    },
+    selectCategory(categrySlug) {
+      const query = {
+        category: categrySlug,
+        sort_by: 'featured'
+      }
+      this.getProductData(query)
+      this.$router.replace({ query: query })
     }
   }
 }

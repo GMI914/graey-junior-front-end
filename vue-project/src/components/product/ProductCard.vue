@@ -1,15 +1,15 @@
 <template>
     <div class="product-card">
         <div class="product-image">
-            <img :src="data.image" :alt="data.name">
-            <span v-if="data.discount !== 0">-{{ data.discount }}%</span>
+            <img :src="data.primary_image.listing_thumbnail" :alt="data.title">
+            <span v-if="data.discount || 0 !== 0">-{{ data.discount }}%</span>
         </div>
         <p class="product-price">
             {{ discountedPrice }}₾
-            <span v-if="data.discount !== 0">{{ data.price }}₾</span>
+            <span v-if="data.discount || 0 !== 0">{{ data.cached_price }}₾</span>
         </p>
         <span v-if="data.installment" class="installment">თვეში: {{ data.installment }}₾-დან</span>
-        <p class="product-title">{{ data.name }}</p>
+        <p class="product-title">{{ data.title }}</p>
     </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     },
     computed: {
         discountedPrice() {
-            return this.data.price * ((100 - this.data.discount) / 100)
+            return this.data.cached_price * ((100 - (this.data.discount || 0)) / 100)
         }
     }
 }

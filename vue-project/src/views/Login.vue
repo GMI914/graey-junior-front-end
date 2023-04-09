@@ -56,7 +56,10 @@ export default {
                 .post(apiUrls.login, this.userForm)
                 .then(response => {
                     token.setToken(response.data.token)
-                    this.$emit('updateUserData', { route: { name: 'home' } })
+
+                    const route = this.$route.query.nextUrl || { name: 'home' }
+
+                    this.$emit('updateUserData', { route: route })
                     this.errors = {}
                 })
                 .catch(err => {

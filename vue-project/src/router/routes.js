@@ -3,6 +3,7 @@ import Manifect from '../views/Manifect.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
+import Profile from '../views/Profile.vue'
 
 export default [
     {
@@ -13,10 +14,7 @@ export default [
     {
         path: '/manifest',
         name: 'manifest',
-        component: Manifect,
-        meta: {
-            protected: true
-        }
+        component: Manifect
     },
     {
         path: '/register',
@@ -32,5 +30,13 @@ export default [
         path: '/logout',
         name: 'logout',
         component: Logout
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: Profile,
+        meta: {
+            protected: true
+        }
     }
 ]

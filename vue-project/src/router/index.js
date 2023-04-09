@@ -10,7 +10,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   if (to.meta.protected && !token.getToken()) {
-    next({ name: 'login', params: { nextUrl: to.fullPath } })
+    next({ name: 'login', query: { nextUrl: to.fullPath } })
   }
   
   next()

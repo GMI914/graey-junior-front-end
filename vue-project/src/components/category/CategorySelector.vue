@@ -5,8 +5,8 @@
             <p>ყველა კატეგორიის ნახვა</p>
         </div>
         <Carousel class="category-selector-carousel" :items-to-show="6" :items-to-scroll="3">
-            <Slide v-for="category in categoryData" :key="category.title">
-                <CategoryCard :data="category" />
+            <Slide v-for="category in data" :key="category.title">
+                <CategoryCard :data="category" @selectCategory="($event) => { $emit('selectCategory', $event) }" />
             </Slide>
 
             <template #addons>
@@ -29,42 +29,12 @@ export default {
         Navigation,
         CategoryCard
     },
-    data() {
-        return {
-            categoryData: [
-                {
-                    title: 'საჩუქრები',
-                    image: 'https://adjarastoremedia.s3.amazonaws.com/media/product_category/100x100ნწეიოფნიწებფიერჰფ9348ჰ73849ჰუ348ფ734ჰფუ3ფ.png'
-                },
-                {
-                    title: 'ტექნიკა',
-                    image: 'https://adjarastoremedia.s3.amazonaws.com/media/product_category/100x100ნწეიოფნიწებფიერჰფ9348ჰ73849ჰუ348ფ734ჰფუ3ფ.png'
-                },
-                {
-                    title: 'ბარი & მეტი',
-                    image: 'https://adjarastoremedia.s3.amazonaws.com/media/product_category/100x100ნწეიოფნიწებფიერჰფ9348ჰ73849ჰუ348ფ734ჰფუ3ფ.png'
-                },
-                {
-                    title: 'სილამაზე & მოვლა',
-                    image: 'https://adjarastoremedia.s3.amazonaws.com/media/product_category/100x100ნწეიოფნიწებფიერჰფ9348ჰ73849ჰუ348ფ734ჰფუ3ფ.png'
-                },
-                {
-                    title: 'სახლი & ეზო',
-                    image: 'https://adjarastoremedia.s3.amazonaws.com/media/product_category/100x100ნწეიოფნიწებფიერჰფ9348ჰ73849ჰუ348ფ734ჰფუ3ფ.png'
-                },
-                {
-                    title: 'სახლის მოვლა',
-                    image: 'https://adjarastoremedia.s3.amazonaws.com/media/product_category/100x100ნწეიოფნიწებფიერჰფ9348ჰ73849ჰუ348ფ734ჰფუ3ფ.png'
-                },
-                {
-                    title: 'სათამაშოები',
-                    image: 'https://adjarastoremedia.s3.amazonaws.com/media/product_category/100x100ნწეიოფნიწებფიერჰფ9348ჰ73849ჰუ348ფ734ჰფუ3ფ.png'
-                },
-                {
-                    title: 'წიგნები',
-                    image: 'https://adjarastoremedia.s3.amazonaws.com/media/product_category/100x100ნწეიოფნიწებფიერჰფ9348ჰ73849ჰუ348ფ734ჰფუ3ფ.png'
-                }
-            ]
+    props: {
+        data: {
+            type: Object,
+            default() {
+                return {}
+            }
         }
     }
 }

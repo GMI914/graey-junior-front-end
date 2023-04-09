@@ -1,5 +1,6 @@
 <template>
-    <a :href="data.link || '#'" class="card" :class="{ 'short': type === 'short' }">
+    <a :href="data.link || '#'" class="card" @click="selectCategory" :class="{ 'short': type === 'short' }"
+        :style="{ 'background-color': data.color }">
         <p>{{ data.title }}</p>
         <img :src="data.image" :alt="data.title">
     </a>
@@ -18,6 +19,11 @@ export default {
         type: {
             type: String,
             default: "tall"
+        }
+    },
+    methods: {
+        selectCategory() {
+            this.$emit('selectCategory', this.data.slug)
         }
     }
 }
