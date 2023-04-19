@@ -1,5 +1,9 @@
 <template>
   <BaseWrapper>
+
+    <p>{{ data }}</p>
+    <p>{{ avatar }}</p>
+
     <CategorySelector :data="categoryData" @selectCategory="selectCategory" />
     <ProductSlider title="დღის შეთავაზებები" :data="productData" link="#" />
   </BaseWrapper>
@@ -10,6 +14,7 @@ import CategorySelector from '../components/category/CategorySelector.vue'
 import BaseWrapper from '../components/layout/BaseWrapper.vue'
 import ProductSlider from '../components/product/ProductSlider.vue'
 import { ajax, authAjax, apiUrls } from '../api/urls'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: "HomePage",
@@ -28,15 +33,41 @@ export default {
   },
   data() {
     return {
-      categoryData: [],
-      productData: []
+      categoryData: []
     }
   },
+  computed: {
+    ...mapGetters({
+      data: 'userData',
+      avatar: 'userAvatar',
+      productData: 'product/productList'
+    }),
+    ...mapState({
+      stateUserData: 'userData'
+    })
+  },
   mounted() {
+    // this.$store.state
+    // this.$store.commit('mutation name', payload)
+    // this.$store.dispatch('getUserData')
+    this.$store.dispatch('product/getProductList')
+    // this.$store.getters
+
+    this.getUserData()
+
+    // this.data
+    // this.avatar
+
     this.getCategoryData()
     this.getProductData(this.$route.query)
   },
   methods: {
+    ...mapMutations({
+      setUserData: 'setUserData'
+    }),
+    ...mapActions({
+      getUserData: 'getUserData'
+    }),
     getCategoryData() {
       return ajax
         .get(apiUrls.productCategories)
